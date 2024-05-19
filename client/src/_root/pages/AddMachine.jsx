@@ -1,5 +1,6 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Select from "react-select";
 import Filter from "bad-words";
 import { UserContext } from "../../store/user-context";
 import Loader from "../../components/shared/Loader";
@@ -85,7 +86,13 @@ const AddMachine = () => {
   ];
 
   const [description, setDescription] = useState("");
+  const [machineUser, setMachineUser] = useState(null);
+  const [allUsers, setAllUsers] = useState([]);
   const [loader, setLoader] = useState(false);
+
+  const handleMachineUserChange = (selectedOption) => {
+    setMachineUser(selectedOption);
+  };
 
   // Filter out abusive and bad words
   const filter = new Filter();
@@ -97,42 +104,45 @@ const AddMachine = () => {
   const onSubmit = async () => {
     setLoader(true);
 
-    const token = localStorage.getItem("authToken");
-
-    const formData = new FormData();
-    if (user.id) {
-      formData.append("adminId", user.id);
-    }
-
-    if (user.name) {
-      formData.append("name", user.name);
-    }
-
-    if (city) {
-      formData.append("city", city);
-    }
-
-    if (mall) {
-      formData.append("mall", mall);
-    }
-
-    if (machine) {
-      formData.append("machine", machine);
-    }
-
-    if (description) {
-      const filteredDescription = filterAbusiveWords(description);
-      formData.append("description", filteredDescription);
-    }
-
-    if (
-      !formData.has("city") &&
-      !formData.has("mall") &&
-      !formData.has("machine")
-    ) {
+    if (!city && !mall && !machine) {
       setLoader(false);
       alert("You have not filled all mandatory fields.");
       return;
+    }
+
+    const token = localStorage.getItem("authToken");
+
+    const data = {};
+    if (user.id) {
+      data.adminId = user.id;
+    }
+
+    if (user.name) {
+      data.adminName = user.name;
+    }
+
+    if (user.username) {
+      data.adminUserName = user.username;
+    }
+
+    data.city = city;
+    data.mall = mall;
+    data.machine = machine;
+
+    data.machineActive = "Yes";
+    data.machineIdle = null;
+    data.alert = null;
+    data.machineNotWorking = null;
+
+    if (description) {
+      const filteredDescription = filterAbusiveWords(description);
+      data.description = filteredDescription;
+    }
+
+    if (machineUser) {
+      data.AU_id = machineUser.value.userId;
+      data.AU_name = machineUser.value.name;
+      data.AU_username = machineUser.value.username;
     }
 
     const addPost = async () => {
@@ -142,9 +152,10 @@ const AddMachine = () => {
           {
             method: "POST",
             headers: {
+              "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
             },
-            body: formData,
+            body: JSON.stringify(data),
           }
         );
 
@@ -185,13 +196,47 @@ const AddMachine = () => {
     addPost();
   };
 
-  // useEffect(() => {
-  //   const user = JSON.parse(localStorage.getItem("user"));
+  useEffect(() => {
+    setLoader(true);
 
-  //   if (!user) {
-  //     navigate("/sign-in");
-  //   }
-  // }, []);
+    const fetchAllUsers = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/getAddedUsers`);
+
+        const result = await response.json();
+
+        if (result.success) {
+          const usersOptions = result.addedUsers.map((user) => ({
+            value: {
+              userId: user.AU_id,
+              name: user.AU_name,
+              username: user.AU_username,
+            },
+            label: `${user.AU_name} (${user.AU_username})`,
+          }));
+
+          setAllUsers(usersOptions);
+        }
+
+        setLoader(false);
+      } catch (error) {
+        setLoader(false);
+        setError(true);
+        console.log(
+          "status: " + error.status + " || " + "Error: " + error.message
+        );
+        alert(
+          "status: " +
+            error.status +
+            " || " +
+            "Error Adding Machine: " +
+            error.message
+        );
+      }
+    };
+
+    fetchAllUsers();
+  }, []);
 
   const buttonCSS =
     "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2";
@@ -321,12 +366,13 @@ const AddMachine = () => {
                   Assign User
                 </label>
 
-                <input
+                <Select
                   id="assignUser"
-                  type="text"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  className={`${inputCSS} shad-textarea`}
+                  value={machineUser}
+                  onChange={handleMachineUserChange}
+                  options={allUsers}
+                  className={`rounded-md text-sm text-black shad-textarea`}
+                  placeholder="Search and select a user"
                 />
               </div>
 

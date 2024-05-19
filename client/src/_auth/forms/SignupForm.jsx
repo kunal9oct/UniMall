@@ -49,14 +49,6 @@ const SignupForm = () => {
         }
 
         setLoader(false);
-        // const result = await response.json().then((data) => {
-        //   const redirectURL = data.redirectURL;
-        //   if(redirectURL) {
-        //     window.location.href = redirectURL;
-        //   } else {
-        //     alert('Error ji');
-        //   }
-        // });
       } catch (error) {
         setLoader(false);
         console.log(

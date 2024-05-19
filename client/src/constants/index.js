@@ -6,13 +6,13 @@ export const sidebarLinks = [
   },
   {
     imgURL: "/assets/icons/gallery-add.svg",
-    route: "/posts",
-    label: "Your Posts",
+    route: "/yourMachines",
+    label: "Your Machines",
   },
   {
     imgURL: "/assets/icons/people.svg",
-    route: "/editProfile",
-    label: "Edit Profile",
+    route: "/addUser",
+    label: "Add User",
   },
   {
     imgURL: "/assets/icons/wallpaper.svg",
@@ -29,13 +29,13 @@ export const bottombarLinks = [
   },
   {
     imgURL: "/assets/icons/gallery-add.svg",
-    route: "/posts",
-    label: "Your Posts",
+    route: "/yourMachines",
+    label: "Your Machines",
   },
   {
     imgURL: "/assets/icons/people.svg",
-    route: "/editProfile",
-    label: "Edit Profile",
+    route: "/addUser",
+    label: "Add User",
   },
   {
     imgURL: "/assets/icons/wallpaper.svg",
@@ -109,5 +109,68 @@ export const avatars = [
     imgURL: "/assets/icons/profile-placeholder.svg",
     alt: 'No Photo',
     name: 'profile-placeholder.svg'
+  },
+]
+
+export const cities = [
+  {
+    imgURL: "/assets/cities/agra.jpg",
+    city: 'Agra',
+    malls: '3',
+    powerCon: '3,500kW',
+  },
+  {
+    imgURL: "/assets/cities/ahmedabad.png",
+    city: 'Ahmedabad',
+    malls: '3',
+    powerCon: '4,000kW',
+  },
+  {
+    imgURL: "/assets/cities/bareilly.png",
+    city: 'Bareilly',
+    malls: '2',
+    powerCon: '4,000kW',
+  },
+  {
+    imgURL: "/assets/cities/bengaluru.png",
+    city: 'Bengaluru',
+    malls: '7',
+    powerCon: '3,500kW',
+  },
+  {
+    imgURL: "/assets/cities/chennai.png",
+    city: 'Chennai',
+    malls: '4',
+    powerCon: '3,500kW',
+  },
+  {
+    imgURL: "/assets/cities/indore.png",
+    city: 'Indore',
+    malls: '4',
+    powerCon: '3,500kW',
+  },
+  {
+    imgURL: "/assets/cities/kolkata.png",
+    city: 'Kolkata',
+    malls: '3',
+    powerCon: '4,000kW',
+  },
+  {
+    imgURL: "/assets/cities/lucknow.png",
+    city: 'Lucknow',
+    malls: '3',
+    powerCon: '4,000kW',
+  },
+  {
+    imgURL: "/assets/cities/mumbai.png",
+    city: 'Mumbai',
+    malls: '7',
+    powerCon: '4,000kW',
+  },
+  {
+    imgURL: "/assets/cities/pune.png",
+    city: 'Pune',
+    malls: '3',
+    powerCon: '4,000kW',
   },
 ]

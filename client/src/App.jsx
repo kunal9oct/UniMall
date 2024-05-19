@@ -6,11 +6,12 @@ import AuthLayout from "./_auth/AuthLayout";
 import RootLayout from "./_root/RootLayout";
 import "./globals.css";
 import Home from "./_root/pages/Home";
-import Posts from "./_root/pages/Posts";
+import YourMachines from "./_root/pages/YourMachines";
 import EditProfile from "./_root/pages/EditProfile";
 import AddMachine from "./_root/pages/AddMachine";
 import EditPost from "./_root/pages/EditPost";
 import PostPage from "./_root/pages/PostPage";
+import AddUser from "./_root/pages/AddUser";
 
 const App = () => {
   return (
@@ -25,11 +26,12 @@ const App = () => {
         {/* private routes */}
         <Route element={<RootLayout />}>
           <Route index element={<Home />} />
-          <Route path="/posts" element={<Posts />} />
+          <Route path="/yourMachines" element={<YourMachines />} />
           <Route path="/postPage" element={<PostPage />} />
           <Route path="/editProfile" element={<EditProfile />} />
           <Route path="/editPost/:id" element={<EditPost />} />
           <Route path="/addMachine" element={<AddMachine />} />
+          <Route path="/addUser" element={<AddUser />} />
         </Route>
       </Routes>
     </>

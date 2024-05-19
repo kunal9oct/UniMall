@@ -3,11 +3,9 @@ import Machine from '../models/Machine.js';
 export const machine = async (req, res, next) => {
     if (req.params.id === req.user.id) {
         try {
-            console.log(req.body);
-
             const newMachine = new Machine(req.body);
             await newMachine.save();
-            
+
             res.status(200).json({ success: true });
         } catch (error) {
             next(error);

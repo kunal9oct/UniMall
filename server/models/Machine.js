@@ -1,11 +1,15 @@
 import mongoose from "mongoose";
 
 const MachineSchema = new mongoose.Schema({
-    userId: {
+    adminId: {
         type: String,
         required: true
     },
-    name: {
+    adminName: {
+        type: String,
+        required: true
+    },
+    adminUserName: {
         type: String,
         required: true
     },
@@ -21,11 +25,35 @@ const MachineSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    machineActive: {
+        type: String,
+        default: null
+    },
+    machineIdle: {
+        type: String,
+        default: null
+    },
+    alert: {
+        type: String,
+        default: null
+    },
+    machineNotWorking: {
+        type: String,
+        default: null
+    },
     description: {
         type: String,
         default: null
     },
-    user: {
+    AU_id: {
+        type: String,
+        default: null
+    },
+    AU_name: {
+        type: String,
+        default: null
+    },
+    AU_username: {
         type: String,
         default: null
     },

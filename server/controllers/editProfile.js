@@ -1,4 +1,6 @@
 import User from "../models/User.js";
+import AddUser from "../models/AddedUser.js";
+import Machine from '../models/Machine.js';
 import bcrypt from 'bcryptjs';
 
 export const update = async (req, res, next) => {
@@ -37,11 +39,60 @@ export const update = async (req, res, next) => {
             }
 
             if (req.body.avatarImgURL) {
-                req.body = {...req.body, ['profileImgURL']: null}
+                req.body = { ...req.body, ['profileImgURL']: null }
             }
 
             if (req.file) {
                 req.body = { ...req.body, ['profileImgURL']: req.file.filename, ['avatarImgURL']: null };
+            }
+
+            const AU_id = req.params.id;
+            const addedUserExists = await AddUser.findOne({ AU_id });
+            const machineAssignedUserExists = await Machine.findOne({ AU_id });
+
+            if (machineAssignedUserExists) {
+                const updatedMachineInfo = {};
+
+                if (req.body.name) {
+                    updatedMachineInfo.AU_name = req.body.name;
+                }
+
+                if (req.body.username) {
+                    updatedMachineInfo.AU_username = req.body.username;
+                }
+
+                const updatedMachine = await Machine.findOneAndUpdate(
+                    { AU_id },
+                    { $set: updatedMachineInfo },
+                    { new: true }
+                );
+            }
+
+            if (addedUserExists) {
+                const updatedAddedUserInfo = {};
+                if (req.body.name) {
+                    updatedAddedUserInfo.AU_name = req.body.name;
+                }
+
+                if (req.body.username) {
+                    updatedAddedUserInfo.AU_username = req.body.username;
+                }
+
+                if (req.body.avatarImgURL) {
+                    updatedAddedUserInfo.avatarImgURL = req.body.avatarImgURL;
+                    updatedAddedUserInfo.profileImgURL = null;
+                }
+
+                if (req.file) {
+                    updatedAddedUserInfo.profileImgURL = req.file.filename;
+                    updatedAddedUserInfo.avatarImgURL = null;
+                }
+
+                const updatedAddedUser = await AddUser.findOneAndUpdate(
+                    { AU_id },
+                    { $set: updatedAddedUserInfo },
+                    { new: true }
+                );
             }
 
             const updatedUser = await User.findByIdAndUpdate(req.params.id, {

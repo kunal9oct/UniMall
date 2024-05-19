@@ -35,7 +35,7 @@ const SigninForm = () => {
           localStorage.setItem("user", JSON.stringify(result.userDetails));
           localStorage.setItem("authToken", result.token);
           methods.reset();
-          navigate("/");
+          navigate("/yourMachines");
         }
 
         if (response.status === 404) {

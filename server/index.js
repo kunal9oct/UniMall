@@ -4,9 +4,13 @@ import dotenv from 'dotenv';
 import authRoutes from './routes/auth.js';
 import updateRoutes from './routes/editProfile.js';
 import machineRoutes from './routes/addMachine.js';
-import editPostRoutes from './routes/editPost.js';
-import { getAll } from './controllers/getAll.js';
-import { getPosts } from "./controllers/getPosts.js";
+import assignUserRoutes from './routes/assignUser.js';
+import { getAllMachines } from './controllers/getAllMachines.js';
+import { getAllMachinesByUser } from './controllers/getAllMachinesByUser.js';
+import { getUsers } from "./controllers/getUsers.js";
+import { getAddedUsers } from "./controllers/getAddedUsers.js";
+import { addUser } from "./controllers/addUser.js";
+import { editMachineStatus } from "./controllers/editMachineStatus.js";
 import cors from "cors";
 
 const app = express();
@@ -27,9 +31,13 @@ app.use(express.json());
 app.use('', authRoutes);
 app.use('/editProfile', updateRoutes);
 app.use('/addMachine', machineRoutes);
-app.use('/editPost', editPostRoutes);
-app.get('/getAll', getAll);
-app.get('/getPosts/:id', getPosts);
+app.use('/assignUser', assignUserRoutes);
+app.get('/getAllMachines', getAllMachines);
+app.get('/getAllMachinesByUser/:id', getAllMachinesByUser);
+app.get('/getUsers', getUsers);
+app.get('/getAddedUsers', getAddedUsers);
+app.post('/addUser', addUser);
+app.put('/editMachineStatus/:id', editMachineStatus);
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
