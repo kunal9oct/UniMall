@@ -61,7 +61,7 @@ export const update = async (req, res, next) => {
                     updatedMachineInfo.AU_username = req.body.username;
                 }
 
-                const updatedMachine = await Machine.findOneAndUpdate(
+                const updatedMachine = await Machine.updateMany(
                     { AU_id },
                     { $set: updatedMachineInfo },
                     { new: true }

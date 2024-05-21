@@ -9,16 +9,16 @@ export const getAllMachines = async (req, res, next) => {
                 $group: {
                     _id: "$city",
                     countActive: {
-                        $sum: { $cond: [{ $eq: ["$machineActive", "Yes"] }, 1, 0] }
+                        $sum: { $cond: [{ $eq: ["$machineActive", "active"] }, 1, 0] }
                     },
                     countIdle: {
-                        $sum: { $cond: [{ $eq: ["$machineIdle", "Yes"] }, 1, 0] }
+                        $sum: { $cond: [{ $eq: ["$machineIdle", "idle"] }, 1, 0] }
                     },
                     countAlert: {
-                        $sum: { $cond: [{ $eq: ["$alert", "Yes"] }, 1, 0] }
+                        $sum: { $cond: [{ $eq: ["$alert", "alert"] }, 1, 0] }
                     },
                     countNotWorking: {
-                        $sum: { $cond: [{ $eq: ["$machineNotWorking", "Yes"] }, 1, 0] }
+                        $sum: { $cond: [{ $eq: ["$machineNotWorking", "notWorking"] }, 1, 0] }
                     }
                 }
             }

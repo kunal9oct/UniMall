@@ -16,7 +16,7 @@ const YourMachines = () => {
     if (user?.authority === "admin") {
       const fetchAllMachines = async () => {
         try {
-          const response = await fetch(`http://localhost:5000/getAllMachines`);
+          const response = await fetch(`https://unimall-server.onrender.com/getAllMachines`);
 
           const result = await response.json();
 
@@ -39,7 +39,7 @@ const YourMachines = () => {
       const fetchAllMachinesByUser = async () => {
         try {
           const response = await fetch(
-            `http://localhost:5000/getAllMachinesByUser/${user.id}`
+            `https://unimall-server.onrender.com/getAllMachinesByUser/${user.id}`
           );
 
           const result = await response.json();
@@ -88,12 +88,12 @@ const YourMachines = () => {
               ) : machines ? (
                 <div className="max-w-screen-xl py-5">
                   <div className="min-[300px]:grid max-[600px]:grid-cols-1 min-[600px]:grid-cols-2 min-[1150px]:grid-cols-3 gap-4 min-[800px]:gap-2 min-[900px]:gap-4">
-                    {machines?.map((machine) => (
+                    {machines?.map((machine, index) => (
                       <div
-                        key={machine._id}
+                        key={machine._id + index}
                         className="post-card cursor-pointer flex-1 max-[350px]:min-w-52 max-[380px]:min-w-72 max-[450px]:min-w-80 max-[600px]:min-w-96 max-[700px]:min-w-64 max-[800px]:min-w-80 max-[950px]:min-w-64 max-[1000px]:min-w-72 max-[1150px]:min-w-80 max-[1250px]:min-w-64 max-[1350px]:min-w-72 max-[1520px]:min-w-80 min-w-96"
                       >
-                        <MachineCard key={machine.AU_id} machine={machine} />
+                        <MachineCard machine={machine} />
                       </div>
                     ))}
                   </div>
@@ -114,13 +114,12 @@ const YourMachines = () => {
               ) : machinesByUser ? (
                 <div className="max-w-screen-xl py-5">
                   <div className="min-[300px]:grid max-[600px]:grid-cols-1 min-[600px]:grid-cols-2 min-[1150px]:grid-cols-3 gap-4 min-[800px]:gap-2 min-[900px]:gap-4">
-                    {machinesByUser?.map((machine) => (
+                    {machinesByUser?.map((machine, index) => (
                       <div
-                        key={machine.AU_id}
+                        key={machine.AU_id + index}
                         className="post-card cursor-pointer flex-1 max-[350px]:min-w-52 max-[380px]:min-w-72 max-[450px]:min-w-80 max-[600px]:min-w-96 max-[700px]:min-w-64 max-[800px]:min-w-80 max-[950px]:min-w-64 max-[1000px]:min-w-72 max-[1150px]:min-w-80 max-[1250px]:min-w-64 max-[1350px]:min-w-72 max-[1520px]:min-w-80 min-w-96"
                       >
                         <MachineCard
-                          key={machine.AU_username}
                           machine={machine}
                         />
                       </div>

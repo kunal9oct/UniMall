@@ -21,9 +21,9 @@ const LeftSidebar = () => {
       <div className="flex flex-col gap-11">
         <Link to="/" className="flex gap-3 items-center">
           <img
-            src="/assets/images/bloggram.png"
+            src="/assets/images/uniMall.png"
             alt="logo"
-            width={190}
+            width={200}
             height={40}
           />
         </Link>
@@ -38,7 +38,7 @@ const LeftSidebar = () => {
               src={
                 user.avatarImgURL ||
                 (user.profileImgURL &&
-                  `http://localhost:5000/uploads/images/${user.profileImgURL}`) ||
+                  `https://unimall-server.onrender.com/uploads/images/${user.profileImgURL}`) ||
                 "/assets/icons/profile-placeholder.svg"
               }
               alt="profile"

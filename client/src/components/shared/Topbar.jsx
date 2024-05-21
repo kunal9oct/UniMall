@@ -18,9 +18,9 @@ const Topbar = () => {
       <div className="flex-between py-4 px-5">
         <Link to="/" className="flex gap-3 items-center">
           <img
-            src="/assets/images/bloggram.png"
+            src="/assets/images/uniMall.png"
             alt="logo"
-            width={170}
+            width={180}
             height={350}
           />
         </Link>
@@ -34,7 +34,7 @@ const Topbar = () => {
               src={
                 user.avatarImgURL ||
                 (user.profileImgURL &&
-                  `http://localhost:5000/uploads/images/${user.profileImgURL}`) ||
+                  `https://unimall-server.onrender.com/uploads/images/${user.profileImgURL}`) ||
                 "/assets/icons/profile-placeholder.svg"
               }
               alt="profile"

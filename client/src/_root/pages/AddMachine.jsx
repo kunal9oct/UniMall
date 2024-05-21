@@ -129,7 +129,7 @@ const AddMachine = () => {
     data.mall = mall;
     data.machine = machine;
 
-    data.machineActive = "Yes";
+    data.machineActive = "active";
     data.machineIdle = null;
     data.alert = null;
     data.machineNotWorking = null;
@@ -145,10 +145,10 @@ const AddMachine = () => {
       data.AU_username = machineUser.value.username;
     }
 
-    const addPost = async () => {
+    const addMachine = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/addMachine/${user.id}`,
+          `https://unimall-server.onrender.com/addMachine/${user.id}`,
           {
             method: "POST",
             headers: {
@@ -193,7 +193,7 @@ const AddMachine = () => {
       }
     };
 
-    addPost();
+    addMachine();
   };
 
   useEffect(() => {
@@ -201,7 +201,7 @@ const AddMachine = () => {
 
     const fetchAllUsers = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/getAddedUsers`);
+        const response = await fetch(`https://unimall-server.onrender.com/getAddedUsers`);
 
         const result = await response.json();
 
@@ -225,13 +225,7 @@ const AddMachine = () => {
         console.log(
           "status: " + error.status + " || " + "Error: " + error.message
         );
-        alert(
-          "status: " +
-            error.status +
-            " || " +
-            "Error Adding Machine: " +
-            error.message
-        );
+        alert("status: " + error.status + " || " + "Error: " + error.message);
       }
     };
 
@@ -251,7 +245,7 @@ const AddMachine = () => {
           <>
             <div className="max-w-5xl flex-start gap-3 justify-start w-full">
               <img
-                src="/assets/icons/add-post.svg"
+                src="/assets/icons/add-machine.svg"
                 alt="add"
                 width={36}
                 height={36}

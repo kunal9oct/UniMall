@@ -5,7 +5,7 @@ export const sidebarLinks = [
     label: "Home",
   },
   {
-    imgURL: "/assets/icons/gallery-add.svg",
+    imgURL: "/assets/icons/wallpaper.svg",
     route: "/yourMachines",
     label: "Your Machines",
   },
@@ -15,7 +15,7 @@ export const sidebarLinks = [
     label: "Add User",
   },
   {
-    imgURL: "/assets/icons/wallpaper.svg",
+    imgURL: "/assets/icons/machine-add.svg",
     route: "/addMachine",
     label: "Add Machine",
   },
@@ -28,7 +28,7 @@ export const bottombarLinks = [
     label: "Home",
   },
   {
-    imgURL: "/assets/icons/gallery-add.svg",
+    imgURL: "/assets/icons/wallpaper.svg",
     route: "/yourMachines",
     label: "Your Machines",
   },
@@ -38,7 +38,7 @@ export const bottombarLinks = [
     label: "Add User",
   },
   {
-    imgURL: "/assets/icons/wallpaper.svg",
+    imgURL: "/assets/icons/machine-add.svg",
     route: "/addMachine",
     label: "Add Machine",
   },
@@ -172,5 +172,56 @@ export const cities = [
     city: 'Pune',
     malls: '3',
     powerCon: '4,000kW',
+  },
+]
+
+export const machines = [
+  {
+    imgURL: "/assets/machines/atm.png",
+    machineName: 'ATM',
+  },
+  {
+    imgURL: "/assets/machines/vending_machine.png",
+    machineName: 'Vending Machine',
+  },
+  {
+    imgURL: "/assets/machines/escalator_and_elevator.png",
+    machineName: 'Escalators and Elevators',
+  },
+  {
+    imgURL: "/assets/machines/photo_booth.png",
+    machineName: 'Photo Booth',
+  },
+  {
+    imgURL: "/assets/machines/ticket_machine.png",
+    machineName: 'Ticket Machine',
+  },
+  {
+    imgURL: "/assets/machines/arcade_game_machine.png",
+    machineName: 'Arcade Game Machine',
+  },
+  {
+    imgURL: "/assets/machines/massage_chair.png",
+    machineName: 'Massage Chair',
+  },
+  {
+    imgURL: "/assets/machines/parking_payment_machine.jpg",
+    machineName: 'Parking Payment Machine',
+  },
+  {
+    imgURL: "/assets/machines/water_dispenser.png",
+    machineName: 'Water Dispenser',
+  },
+  {
+    imgURL: "/assets/machines/charging_station.png",
+    machineName: 'Charging Station',
+  },
+  {
+    imgURL: "/assets/machines/currency_exchange_machine.jpg",
+    machineName: 'Currency Exchange Machine',
+  },
+  {
+    imgURL: "/assets/machines/locker_rental_machine.png",
+    machineName: 'Locker Rental Machine',
   },
 ]

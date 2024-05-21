@@ -7,7 +7,7 @@ const UserCard = ({ addedUser }) => {
             src={
               addedUser.avatarImgURL ||
               (addedUser.profileImgURL &&
-                `https://bloggram-mern.onrender.com/uploads/images/${addedUser.profileImgURL}`) ||
+                `https://unimall-server.onrender.com/uploads/images/${addedUser.profileImgURL}`) ||
               "/assets/icons/profile-placeholder.svg"
             }
             alt="creator"

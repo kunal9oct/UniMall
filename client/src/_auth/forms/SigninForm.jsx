@@ -21,7 +21,7 @@ const SigninForm = () => {
 
     const signingIn = async () => {
       try {
-        const response = await fetch("http://localhost:5000/signIn", {
+        const response = await fetch("https://unimall-server.onrender.com/signIn", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -80,7 +80,7 @@ const SigninForm = () => {
           className="flex flex-col gap-5 w-full mt-2"
         >
           <div className="flex flex-col items-center">
-            <img src="/assets/images/bloggram.png" width={240} alt="logo" />
+            <img src="/assets/images/uniMall.png" width={220} alt="logo" />
 
             <h2 className="h3-bold md:h2-bold pt-2 sm:pt-0 mb-1 mt-5">
               Log in to your account

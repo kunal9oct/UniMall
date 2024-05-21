@@ -25,7 +25,7 @@ const SignupForm = () => {
 
     const signingUp = async () => {
       try {
-        const response = await fetch("http://localhost:5000/signUp", {
+        const response = await fetch("https://unimall-server.onrender.com/signUp", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -82,7 +82,7 @@ const SignupForm = () => {
           className="flex flex-col gap-3 w-full mt-0"
         >
           <div className="flex flex-col items-center">
-            <img src="/assets/images/bloggram.png" width={220} alt="logo" />
+            <img src="/assets/images/uniMall.png" width={200} alt="logo" />
 
             <h2 className="h3-bold md:h2-bold pt-2 sm:pt-0 mt-1">
               Create a new account

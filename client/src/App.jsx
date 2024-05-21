@@ -9,9 +9,8 @@ import Home from "./_root/pages/Home";
 import YourMachines from "./_root/pages/YourMachines";
 import EditProfile from "./_root/pages/EditProfile";
 import AddMachine from "./_root/pages/AddMachine";
-import EditPost from "./_root/pages/EditPost";
-import PostPage from "./_root/pages/PostPage";
 import AddUser from "./_root/pages/AddUser";
+import DetailedOverview from "./_root/pages/DetailedOverview";
 
 const App = () => {
   return (
@@ -27,9 +26,8 @@ const App = () => {
         <Route element={<RootLayout />}>
           <Route index element={<Home />} />
           <Route path="/yourMachines" element={<YourMachines />} />
-          <Route path="/postPage" element={<PostPage />} />
           <Route path="/editProfile" element={<EditProfile />} />
-          <Route path="/editPost/:id" element={<EditPost />} />
+          <Route path="/detailedOverview/:city" element={<DetailedOverview />} />
           <Route path="/addMachine" element={<AddMachine />} />
           <Route path="/addUser" element={<AddUser />} />
         </Route>

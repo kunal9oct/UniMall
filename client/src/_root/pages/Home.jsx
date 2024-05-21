@@ -1,5 +1,6 @@
 import Loader from "../../components/shared/Loader";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { cities } from "../../constants";
 
 const Home = () => {
@@ -7,14 +8,18 @@ const Home = () => {
   const [loader, setLoader] = useState(true);
   const [error, setError] = useState(false);
 
-  const user = JSON.parse(localStorage.getItem("user"));
+  const navigate = useNavigate();
+
+  const onDetailedView = (city) => {
+    navigate(`/detailedOverview/${city}`);
+  }
 
   useEffect(() => {
     setLoader(true);
 
     const fetchAllMachines = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/getAllMachines`);
+        const response = await fetch(`https://unimall-server.onrender.com/getAllMachines`);
 
         const result = await response.json();
 
@@ -82,9 +87,9 @@ const Home = () => {
                       (cityCounts.countNotWorking / totalMachines) * 100;
 
                     const weights = {
-                      active: 20,
-                      idle: -2,
-                      alert: -3,
+                      active: 18,
+                      idle: -3,
+                      alert: -4,
                       notWorking: -5,
                     };
 
@@ -96,8 +101,8 @@ const Home = () => {
                       10;
 
                     const thresholds = {
-                      optimal: 50,
-                      moderate: 0,
+                      optimal: 70,
+                      moderate: 20,
                       critical: -Infinity,
                     };
 
@@ -115,7 +120,7 @@ const Home = () => {
 
                     calculateCondition();
 
-                    if(cityCounts.countActive === totalMachines) {
+                    if (cityCounts.countActive === totalMachines) {
                       condition = "Optimal Condition";
                     }
 
@@ -161,7 +166,7 @@ const Home = () => {
                           </div>
 
                           {cityDetails && (
-                            <div className="font-medium leading-[160%] text-[18px] pl-1 text-orange-700">
+                            <div className="font-medium leading-[160%] text-[18px] pl-1">
                               <p>Power Con.: - {cityDetails.powerCon}</p>
                             </div>
                           )}
@@ -169,7 +174,7 @@ const Home = () => {
                           <>
                             <button
                               type="button"
-                              // onClick={onAssignUser}
+                              onClick={() => onDetailedView(cityCounts._id)}
                               className={`${buttonCSS} shad-button_primary my-3 rounded-lg text-[18px]`}
                               disabled={loader}
                             >

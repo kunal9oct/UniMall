@@ -22,6 +22,12 @@ const AddUser = () => {
   const addUser = async () => {
     setLoader(true);
 
+    if(!machineUser) {
+      setLoader(false);
+      alert("No User Selected");
+      return;
+    }
+
     const data = {};
     data.AU_id = machineUser.value.userId;
     data.AU_name = machineUser.value.name;
@@ -31,7 +37,7 @@ const AddUser = () => {
 
     const addUser = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/addUser`, {
+        const response = await fetch(`https://unimall-server.onrender.com/addUser`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -57,19 +63,9 @@ const AddUser = () => {
       } catch (error) {
         setLoader(false);
         console.log(
-          "status: " +
-            error.status +
-            " || " +
-            "Error Adding Machine: " +
-            error.message
+          "status: " + error.status + " || " + "Error: " + error.message
         );
-        alert(
-          "status: " +
-            error.status +
-            " || " +
-            "Error Adding Machine: " +
-            error.message
-        );
+        alert("status: " + error.status + " || " + "Error: " + error.message);
       }
     };
 
@@ -81,7 +77,7 @@ const AddUser = () => {
 
     const fetchAddedUsers = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/getAddedUsers`);
+        const response = await fetch(`https://unimall-server.onrender.com/getAddedUsers`);
 
         const result = await response.json();
 
@@ -104,7 +100,7 @@ const AddUser = () => {
 
     const fetchAllUsers = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/getUsers`);
+        const response = await fetch(`https://unimall-server.onrender.com/getUsers`);
 
         const result = await response.json();
 

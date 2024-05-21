@@ -3,6 +3,7 @@ import Select from "react-select";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../store/user-context";
 import Loader from "./Loader";
+import { machines } from "../../constants";
 
 const MachineCard = ({ machine }) => {
   const navigate = useNavigate();
@@ -11,10 +12,10 @@ const MachineCard = ({ machine }) => {
   const [allUsers, setAllUsers] = useState([]);
   const [machineUser, setMachineUser] = useState(null);
   const [machineStatus, setMachineStatus] = useState({
-    active: machine.machineActive === "Yes" ? "active" : null,
-    idle: machine.machineIdle === "Yes" ? "idle" : null,
-    alert: machine.alert === "Yes" ? "alert" : null,
-    notWorking: machine.machineNotWorking === "Yes" ? "notWorking" : null,
+    active: null,
+    idle: null,
+    alert: null,
+    notWorking: null,
   });
 
   const handleStatusChange = (status) => {
@@ -34,34 +35,15 @@ const MachineCard = ({ machine }) => {
     setLoader(true);
 
     const data = {};
-    if (machineStatus.active) {
-      data.machineActive = "Yes";
-    } else {
-      data.machineActive = machineStatus.active;
-    }
-
-    if (machineStatus.idle) {
-      data.machineIdle = "Yes";
-    } else {
-      data.machineIdle = machineStatus.idle;
-    }
-
-    if (machineStatus.alert) {
-      data.alert = "Yes";
-    } else {
-      data.alert = machineStatus.alert;
-    }
-
-    if (machineStatus.notWorking) {
-      data.machineNotWorking = "Yes";
-    } else {
-      data.machineNotWorking = machineStatus.notWorking;
-    }
+    data.machineActive = machineStatus.active;
+    data.machineIdle = machineStatus.idle;
+    data.alert = machineStatus.alert;
+    data.machineNotWorking = machineStatus.notWorking;
 
     const setMachineStatus = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/editMachineStatus/${machine._id}`,
+          `https://unimall-server.onrender.com/editMachineStatus/${machine._id}`,
           {
             method: "PUT",
             headers: {
@@ -89,19 +71,9 @@ const MachineCard = ({ machine }) => {
       } catch (error) {
         setLoader(false);
         console.log(
-          "status: " +
-            error.status +
-            " || " +
-            "Error Adding Machine: " +
-            error.message
+          "status: " + error.status + " || " + "Error: " + error.message
         );
-        alert(
-          "status: " +
-            error.status +
-            " || " +
-            "Error Adding Machine: " +
-            error.message
-        );
+        alert("status: " + error.status + " || " + "Error: " + error.message);
       }
     };
 
@@ -111,6 +83,12 @@ const MachineCard = ({ machine }) => {
   const onAssignUser = async () => {
     setLoader(true);
 
+    if(!machineUser) {
+      setLoader(false);
+      alert("No User Selected");
+      return;
+    }
+
     const data = {};
     data.AU_id = machineUser.value.userId;
     data.AU_name = machineUser.value.name;
@@ -119,7 +97,7 @@ const MachineCard = ({ machine }) => {
     const addPost = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/assignUser/${machine._id}`,
+          `https://unimall-server.onrender.com/assignUser/${machine._id}`,
           {
             method: "POST",
             headers: {
@@ -147,19 +125,9 @@ const MachineCard = ({ machine }) => {
       } catch (error) {
         setLoader(false);
         console.log(
-          "status: " +
-            error.status +
-            " || " +
-            "Error Adding Machine: " +
-            error.message
+          "status: " + error.status + " || " + "Error: " + error.message
         );
-        alert(
-          "status: " +
-            error.status +
-            " || " +
-            "Error Adding Machine: " +
-            error.message
-        );
+        alert("status: " + error.status + " || " + "Error: " + error.message);
       }
     };
 
@@ -174,7 +142,7 @@ const MachineCard = ({ machine }) => {
 
     const fetchAllUsers = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/getAddedUsers`);
+        const response = await fetch(`https://unimall-server.onrender.com/getAddedUsers`);
 
         const result = await response.json();
 
@@ -200,8 +168,26 @@ const MachineCard = ({ machine }) => {
 
     fetchAllUsers();
 
+    let currentStatus;
+
+    if (machine.machineActive) currentStatus = "active";
+    else if (machine.machineIdle) currentStatus = "idle";
+    else if (machine.alert) currentStatus = "alert";
+    else if (machine.machineNotWorking) currentStatus = "notWorking";
+
+    setMachineStatus({
+      active: currentStatus === "active" ? "active" : null,
+      idle: currentStatus === "idle" ? "idle" : null,
+      alert: currentStatus === "alert" ? "alert" : null,
+      notWorking: currentStatus === "notWorking" ? "notWorking" : null,
+    });
+
     setLoader(false);
-  }, []);
+  }, [machine]);
+
+  const matchedMachine = machines.find(
+    (item) => item.machineName === machine.machine
+  );
 
   return (
     <>
@@ -215,32 +201,15 @@ const MachineCard = ({ machine }) => {
         </div>
       )}
 
-      {/* {cityDetails && (
-        <>
-          <div className="font-medium leading-[120%] text-[24px] pl-1">
-            <p>
-              {cityDetails.city} - {cityDetails.malls} Malls
-            </p>
-          </div>
-          <div className="py-4">
-            <img
-              src={cityDetails.imgURL}
-              alt={cityDetails.city}
-              className="post-card_img bg-white"
-            />
-          </div>
-        </>
-      )} */}
-
-      {/* {post.image && (
-        <div>
+      <div className="py-4 h-40">
+        {matchedMachine && (
           <img
-            src={`https://bloggram-mern.onrender.com/uploads/images/${post.image}`}
-            alt="post image"
-            className="post-card_img"
+            src={matchedMachine.imgURL}
+            alt={matchedMachine.machineName}
+            className="h-32 w-32 p-1 rounded-[20px] object-cover mb-0 bg-white"
           />
-        </div>
-      )} */}
+        )}
+      </div>
 
       <div className="font-medium leading-[200%] text-[19px]">
         {machine.mall && <p>Mall - {machine.mall}</p>}
@@ -267,7 +236,7 @@ const MachineCard = ({ machine }) => {
       </div>
 
       {machine.description && (
-        <div className="small-medium lg:base-medium py-5">
+        <div className="small-medium lg:base-medium py-4">
           <p className="text-justify text-[16px]">
             Machine Description - {machine.description}
           </p>
@@ -276,7 +245,7 @@ const MachineCard = ({ machine }) => {
 
       {user.authority === "admin" && (
         <>
-          <div className="font-medium leading-[50%] text-[20px] text-orange-600 pb-6">
+          <div className="font-medium leading-[50%] text-[20px] text-orange-600 pt-2 pb-5">
             {machineStatus.active && (
               <p>Machine Status - {machineStatus.active}</p>
             )}
@@ -331,7 +300,7 @@ const MachineCard = ({ machine }) => {
               <label className="flex items-center">
                 <input
                   type="radio"
-                  name="machineStatus"
+                  name={`machineStatus-${machine._id}`}
                   value="active"
                   checked={machineStatus.active === "active"}
                   onChange={() => handleStatusChange("active")}
@@ -343,7 +312,7 @@ const MachineCard = ({ machine }) => {
               <label className="flex items-center">
                 <input
                   type="radio"
-                  name="machineStatus"
+                  name={`machineStatus-${machine._id}`}
                   value="idle"
                   checked={machineStatus.idle === "idle"}
                   onChange={() => handleStatusChange("idle")}
@@ -355,7 +324,7 @@ const MachineCard = ({ machine }) => {
               <label className="flex items-center">
                 <input
                   type="radio"
-                  name="machineStatus"
+                  name={`machineStatus-${machine._id}`}
                   value="alert"
                   checked={machineStatus.alert === "alert"}
                   onChange={() => handleStatusChange("alert")}
@@ -367,7 +336,7 @@ const MachineCard = ({ machine }) => {
               <label className="flex items-center">
                 <input
                   type="radio"
-                  name="machineStatus"
+                  name={`machineStatus-${machine._id}`}
                   value="notWorking"
                   checked={machineStatus.notWorking === "notWorking"}
                   onChange={() => handleStatusChange("notWorking")}

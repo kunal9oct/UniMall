@@ -67,7 +67,7 @@ const EditProfile = () => {
     const updatingProfile = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/editProfile/${user.id}`,
+          `https://unimall-server.onrender.com/editProfile/${user.id}`,
           {
             method: "PUT",
             headers: {
@@ -180,7 +180,7 @@ const EditProfile = () => {
                       (!changeUI &&
                         (user.avatarImgURL ||
                           (user.profileImgURL &&
-                            `http://localhost:5000/uploads/images/${user.profileImgURL}`))) ||
+                            `https://unimall-server.onrender.com/uploads/images/${user.profileImgURL}`))) ||
                       avatarURL ||
                       (file && URL.createObjectURL(file)) ||
                       "/assets/icons/profile-placeholder.svg"
